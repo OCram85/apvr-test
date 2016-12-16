@@ -1,0 +1,14 @@
+install:
+  
+  - cinst pester
+
+
+  - cinst psake
+
+build: false
+
+
+
+test_script:
+
+  - ps: .\Invoke-UnitTests.ps1
