@@ -11,7 +11,7 @@ Describe "Get-Something" {
         }
 
         It "Test2: Should fail" {
-            Get-Something | Should Be $False
+            Get-Something | Should Not Be $False
         }
     }
 }
