@@ -1,14 +1,21 @@
+version: 1.0.{build}
+
+image: Visual Studio 2015
+
 install:
-  
   - cinst pester
-
-
-  - cinst psake
+  - ps: Import-Module .\tools\AppVeyor.psm1
 
 build: false
 
-
+build_script:
+  - ps: Invoke-AppveyorBuild
 
 test_script:
+  - ps: Invoke-AppVeyorTests
 
-  - ps: .\Invoke-UnitTests.ps1
+after_test:
+  - ps: Invoke-AppVeyorAfterTest
+
+on_finish: 
+  - ps: Invoke-AppveyorFinish

@@ -1,5 +1,5 @@
 $here = Split-Path -Parent $MyInvocation.MyCommand.Path
-$sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -replace '\.Tests\.', '.'
+$sut = (Split-Path -Leaf $MyInvocation.MyCommand.Path) -replace '\.tests\.', '.'
 $sut = $sut -replace "^\d{2}_",''
 $srcfile  = "{0}\{1}\{2}" -f (Get-Item -Path $here).Parent.FullName, 'src', $sut
 . $srcfile
