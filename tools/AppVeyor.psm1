@@ -21,6 +21,7 @@ Function Invoke-AppVeyorBuild() {
 
     #Get-ChildItem -Path ".\src\*" -Recurse | New-ZipFile -Path 'testbuild.zip'
     7z a myapp.zip ("{0}\src\*" -f $env:APPVEYOR_BUILD_FOLDER)
+    Push-AppveyorArtifact myapp.zip
 }
 
 function Invoke-AppVeyorAfterTest() {
