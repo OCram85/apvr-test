@@ -19,7 +19,8 @@ Function Invoke-AppVeyorBuild() {
     [CmdletBinding()]
     Param()
 
-    Get-ChildItem -Path ".\src\*" -Recurse | New-ZipFile -Path 'testbuild.zip'
+    #Get-ChildItem -Path ".\src\*" -Recurse | New-ZipFile -Path 'testbuild.zip'
+    7z a myapp.zip %APPVEYOR_BUILD_FOLDER%\src\*
 }
 
 function Invoke-AppVeyorAfterTest() {
