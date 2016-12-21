@@ -22,4 +22,16 @@ Function Invoke-AppVeyorBuild() {
     Get-ChildItem -Path ".\src\*" -Recurse | New-ZipFile -Path 'testbuild.zip'
 }
 
+function Invoke-AppVeyorAfterTest() {
+    [CmdletBinding()]
+    Param()
+    Write-Host $PSVersionTable
+}
+
+function Invoke-AppveyorFinish () {
+    [CmdletBinding()]
+    Param()
+    Write-Host $PSScriptRoot
+    Write-Host $PSCmdlet.MyInvocation.PSScriptRoot
+}
 #Push-AppveyorArtifact <file_name>
