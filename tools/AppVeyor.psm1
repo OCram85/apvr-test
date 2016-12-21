@@ -20,7 +20,7 @@ Function Invoke-AppVeyorBuild() {
     Param()
 
     #Get-ChildItem -Path ".\src\*" -Recurse | New-ZipFile -Path 'testbuild.zip'
-    7z a myapp.zip %APPVEYOR_BUILD_FOLDER%\src\*
+    7z a myapp.zip ("{0}\src\*" -f $env:APPVEYOR_BUILD_FOLDER)
 }
 
 function Invoke-AppVeyorAfterTest() {
