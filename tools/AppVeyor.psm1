@@ -22,4 +22,4 @@ Function Invoke-AppVeyorBuild() {
     Get-ChildItem -Path ".\src\*" -Recurse | New-ZipFile -Path 'testbuild.zip'
 }
 
-Push-AppveyorArtifact <file_name>
+#Push-AppveyorArtifact <file_name>
