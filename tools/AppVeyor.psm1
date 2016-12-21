@@ -25,13 +25,13 @@ Function Invoke-AppVeyorBuild() {
 function Invoke-AppVeyorAfterTest() {
     [CmdletBinding()]
     Param()
-    Write-Host $PSVersionTable
+    $PSVersionTable
 }
 
 function Invoke-AppveyorFinish () {
     [CmdletBinding()]
     Param()
-    Write-Host $PSScriptRoot
-    Write-Host $PSCmdlet.MyInvocation.PSScriptRoot
+    Write-Host ("PSScriptRoot: {0}" -f $PSScriptRoot )
+    Write-Host ("PSCmdlet: {0}" -f $PSCmdlet.MyInvocation.PSScriptRoot)
 }
 #Push-AppveyorArtifact <file_name>
