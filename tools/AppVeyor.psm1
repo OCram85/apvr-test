@@ -18,10 +18,14 @@ Function Invoke-AppVeyorTests() {
 Function Invoke-AppVeyorBuild() {
     [CmdletBinding()]
     Param()
-
-    #Get-ChildItem -Path ".\src\*" -Recurse | New-ZipFile -Path 'testbuild.zip'
-    7z a myapp.zip ("{0}\src\*" -f $env:APPVEYOR_BUILD_FOLDER)
-    Push-AppveyorArtifact myapp.zip
+    if ($LastExitCode -eq 0) {
+        #Get-ChildItem -Path ".\src\*" -Recurse | New-ZipFile -Path 'testbuild.zip'
+        7z a myapp.zip ("{0}\src\*" -f $env:APPVEYOR_BUILD_FOLDER)
+        Push-AppveyorArtifact myapp.zip
+    }
+    Else {
+        Add-AppveyorCompilationMessage "Build skipped by failed unit tests! " -Category Warning 
+    }
 }
 
 function Invoke-AppVeyorAfterTest() {
