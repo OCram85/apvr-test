@@ -16,6 +16,7 @@ build_script:
 test_script:
   - ps: Invoke-AppVeyorTests
 
+deploy:
   - provider: GitHub
     artifact: myapp.zip           # upload all NuGet packages to release assets
     draft: false
