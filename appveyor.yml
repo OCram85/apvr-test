@@ -2,9 +2,11 @@ version: 1.0.{build}
 
 image: Visual Studio 2015
 
+# Install pester module and init the Appveyor support.
 install:
   - cinst pester
   - ps: Import-Module .\tools\AppVeyor.psm1
+
 
 build: false
 
@@ -14,8 +16,10 @@ build_script:
 test_script:
   - ps: Invoke-AppVeyorTests
 
-after_test:
-  - ps: Invoke-AppVeyorAfterTest
-
-on_finish: 
-  - ps: Invoke-AppveyorFinish
+  - provider: GitHub
+    artifact: myapp.zip           # upload all NuGet packages to release assets
+    draft: false
+    prerelease: false
+    on:
+      branch: master                # release from master branch only
+      appveyor_repo_tag: true       # deploy on tag push only
