@@ -1,2 +1,2 @@
-. $(Resolve-Path ".\Get-Something.ps1")
+. $(Resolve-Path ".\src\Get-Something.ps1")
 Export-ModuleMember *
