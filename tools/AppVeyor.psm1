@@ -29,7 +29,8 @@ Function Invoke-AppVeyorPSGallery() {
 
     If ($env:APPVEYOR_REPO_BRANCH -eq 'master') {
         Expand-Archive -Path '.\myapp.zip' -DestinationPath 'C:\Users\appveyor\Documents\WindowsPowerShell\Modules\apvr-test\' -Verbose
-        Import-Module -Name 'apvr-test' -Verbose
-        Publish-Module -Name 'apvr-test' -NuGetApiKey $env:NuGetToken -Verbose 
+        Import-Module -Name 'apvr-test' -Verbose -Force
+        Write-Host "try to publish module" -ForegroundColor Red -BackgroundColor Black
+        Publish-Module -Name 'apvr-test' -NuGetApiKey $env:NuGetToken -Verbose -Force
     }
 }
