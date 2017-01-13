@@ -4,6 +4,7 @@ branches:
   only:
     - master
     - dev
+    - debug
 
 skip_tags: true
 
