@@ -1,12 +1,23 @@
 version: 1.0.{build}
 
-image: Visual Studio 2015
+branches:
+  only:
+    - master
+    - dev
+    - debug
+
+skip_tags: true
+
+image: WMF 5
 
 # Install pester module and init the Appveyor support.
 install:
   - cinst pester
   - ps: Import-Module .\tools\AppVeyor.psm1
 
+environment:
+  NuGetToken:
+    secure: 835qfZIkC9mE7QhkYfOZVAdR8rZhPvxG8BO4CbeaelRQOhlqmaSr8G1DWRJzZ/bS
 
 build: false
 
@@ -26,3 +37,14 @@ deploy:
     on:
       branch: master                # release from master branch only
 
+  - provider: GitHub
+    auth_token:
+      secure: M+bBX5/nKdJB0eViP7xtrLVTwf3vGDUA9N2MMprZp2i+9ZR3CBVcJnSzJWUmalhB
+    artifact: myapp.zip           # upload all NuGet packages to release assets
+    draft: true
+    prerelease: true
+    on:
+      branch: dev                # release from master branch only
+
+after_deploy:
+  - ps: Invoke-AppVeyorPSGallery

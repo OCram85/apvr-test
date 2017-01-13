@@ -22,3 +22,14 @@ Function Invoke-AppVeyorBuild() {
         7z a myapp.zip ("{0}\src\*" -f $env:APPVEYOR_BUILD_FOLDER)
         Push-AppveyorArtifact myapp.zip
 }
+
+Function Invoke-AppVeyorPSGallery() {
+    [CmdletBinding()]
+    Param()
+
+    If ($env:APPVEYOR_REPO_BRANCH -eq 'master') {
+        Expand-Archive -Path '.\myapp.zip' -DestinationPath 'C:\Users\appveyor\Documents\WindowsPowerShell\Modules\apvr-test\'
+        Import-Module -Name 'apvr-test' -Verbose
+        Publish-Module -Name 'apvr-test' -NuGetApiKey $env:NuGetToken -Verbose 
+    }
+}
