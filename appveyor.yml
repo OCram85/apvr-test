@@ -46,5 +46,14 @@ deploy:
     on:
       branch: dev                # release from master branch only
 
+  - provider: NuGet
+    server: https://www.powershellgallery.com/api/v2/
+    api_key:
+      secure: M+bBX5/nKdJB0eViP7xtrLVTwf3vGDUA9N2MMprZp2i+9ZR3CBVcJnSzJWUmalhB
+    skip_symbols: true
+    symbol_server: https://www.powershellgallery.com/api/v2/
+    artifact: myapp.zip
+
+
 after_deploy:
   - ps: Invoke-AppVeyorPSGallery
