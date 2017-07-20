@@ -20,6 +20,7 @@ install:
   - ps: Update-Module 'Pester'
   - ps: Install-Module -Name 'posh-git' -Scope CurrentUser -Force -SkipPublisherCheck -AllowClobber
   - ps: Update-Module 'posh-git'
+  - ps: Install-Module 'PSCoverage' -Scope CurrentUser -Force -SkipPublisherCheck -AllowClobber
   - ps: Import-Module .\tools\AppVeyor.psm1
 
 environment:
