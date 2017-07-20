@@ -24,16 +24,16 @@
     Author            = 'OCram85'
 
     # Company or vendor of this module
-    CompanyName       = ''
+    CompanyName       = 'OCram85'
 
     # Copyright statement for this module
     Copyright         = '(c) 2017 OCram85. All rights reserved.'
 
     # Description of the functionality provided by this module
-    # Description = ''
+    Description = 'This is just an AppVeyor test module.'
 
     # Minimum version of the Windows PowerShell engine required by this module
-    # PowerShellVersion = ''
+    PowerShellVersion = '5.0'
 
     # Name of the Windows PowerShell host required by this module
     # PowerShellHostName = ''
@@ -88,7 +88,9 @@
     # DscResourcesToExport = @()
 
     # List of all modules packaged with this module
-    # ModuleList = @()
+    ModuleList        = @(
+        'apvr-test'
+    )
 
     # List of all files packaged with this module
     # FileList = @()
