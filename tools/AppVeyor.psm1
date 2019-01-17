@@ -19,15 +19,15 @@ Function Invoke-AppVeyorBumpVersion() {
 
     Try {
         $ModManifest = Get-Content -Path (".\src\{0}.psd1" -f $CALLSIGN)
-        $BumpedManifest = $ModManifest -replace '0.0.0.9999', "'$Env:APPVEYOR_BUILD_VERSION'"
+        $BumpedManifest = $ModManifest -replace '0.0.9999', "'$Env:APPVEYOR_BUILD_VERSION'"
         Remove-Item -Path (".\src\{0}.psd1" -f $CALLSIGN)
         Out-File -FilePath (".\src\{0}.psd1" -f $CALLSIGN) -InputObject $BumpedManifest -NoClobber -Encoding utf8 -Force
     }
     Catch {
         $MsgParams = @{
-            Message = 'Could not bump current version into module manifest.'
+            Message  = 'Could not bump current version into module manifest.'
             Category = 'Error'
-            Details = $_.Exception.Message
+            Details  = $_.Exception.Message
         }
         Add-AppveyorMessage @MsgParams
         Throw $MsgParams.Message
@@ -38,22 +38,22 @@ Function Invoke-AppVeyorBuild() {
     [CmdletBinding()]
     Param()
     $MsgParams = @{
-        Message = 'Creating build artifacts'
+        Message  = 'Creating build artifacts'
         Category = 'Information'
-        Details = 'Extracting source files and compressing them into zip file.'
+        Details  = 'Extracting source files and compressing them into zip file.'
     }
     Add-AppveyorMessage @MsgParams
     $CompParams = @{
-        Path = "{0}\src\*" -f $env:APPVEYOR_BUILD_FOLDER
+        Path            = "{0}\src\*" -f $env:APPVEYOR_BUILD_FOLDER
         DestinationPath = "{0}\bin\{1}.zip" -f $env:APPVEYOR_BUILD_FOLDER, $CALLSIGN
-        Update = $True
-        Verbose = $True
+        Update          = $True
+        Verbose         = $True
     }
     Compress-Archive @CompParams
     $MsgParams = @{
-        Message = 'Pushing artifacts'
+        Message  = 'Pushing artifacts'
         Category = 'Information'
-        Details = 'Pushing artifacts to AppVeyor store.'
+        Details  = 'Pushing artifacts to AppVeyor store.'
     }
     Add-AppveyorMessage @MsgParams
     Push-AppveyorArtifact (".\bin\{0}.zip" -f $CALLSIGN)
@@ -64,9 +64,9 @@ Function Invoke-AppVeyorTests() {
     Param()
 
     $MsgParams = @{
-        Message = 'Starting Pester tests'
+        Message  = 'Starting Pester tests'
         Category = 'Information'
-        Details = 'Now running all test found in .\tests\ dir.'
+        Details  = 'Now running all test found in .\tests\ dir.'
     }
     Add-AppveyorMessage @MsgParams
     $testresults = Invoke-Pester -Path ".\tests\*" -ExcludeTag 'Disabled' -PassThru
@@ -74,34 +74,34 @@ Function Invoke-AppVeyorTests() {
         Switch ($Item.Result) {
             "Passed" {
                 $TestParams = @{
-                    Name = "{0}: {1}" -f $Item.Context, $Item.Name
+                    Name      = "{0}: {1}" -f $Item.Context, $Item.Name
                     Framework = "NUnit"
-                    Filename = $Item.Describe
-                    Outcome = "Passed"
-                    Duration = $Item.Time.Milliseconds
+                    Filename  = $Item.Describe
+                    Outcome   = "Passed"
+                    Duration  = $Item.Time.Milliseconds
                 }
                 Add-AppveyorTest @TestParams
             }
             "Failed" {
                 $TestParams = @{
-                    Name = "{0}: {1}" -f $Item.Context, $Item.Name
-                    Framework = "NUnit"
-                    Filename = $Item.Describe
-                    Outcome = "Failed"
-                    Duration = $Item.Time.Milliseconds
-                    ErrorMessage = $Item.FailureMessage
+                    Name            = "{0}: {1}" -f $Item.Context, $Item.Name
+                    Framework       = "NUnit"
+                    Filename        = $Item.Describe
+                    Outcome         = "Failed"
+                    Duration        = $Item.Time.Milliseconds
+                    ErrorMessage    = $Item.FailureMessage
                     ErrorStackTrace = $Item.StackTrace
                 }
                 Add-AppveyorTest @TestParams
             }
             Default {
                 $TestParams = @{
-                    Name = "{0}: {1}" -f $Item.Context, $Item.Name
-                    Framework = "NUnit"
-                    Filename = $Item.Describe
-                    Outcome = "None"
-                    Duration = $Item.Time.Milliseconds
-                    ErrorMessage = $Item.FailureMessage
+                    Name            = "{0}: {1}" -f $Item.Context, $Item.Name
+                    Framework       = "NUnit"
+                    Filename        = $Item.Describe
+                    Outcome         = "None"
+                    Duration        = $Item.Time.Milliseconds
+                    ErrorMessage    = $Item.FailureMessage
                     ErrorStackTrace = $Item.StackTrace
                 }
                 Add-AppveyorTest @TestParams
@@ -110,9 +110,9 @@ Function Invoke-AppVeyorTests() {
     }
     If ($testresults.FailedCount -gt 0) {
         $MsgParams = @{
-            Message = 'Pester Tests failed.'
+            Message  = 'Pester Tests failed.'
             Category = 'Error'
-            Details = "$($testresults.FailedCount) tests failed."
+            Details  = "$($testresults.FailedCount) tests failed."
         }
         Add-AppveyorMessage @MsgParams
         Throw $MsgParams.Message
@@ -158,7 +158,7 @@ Function Invoke-AppVeyorPSGallery() {
         If ($env:APPVEYOR_REPO_BRANCH -eq 'master') {
             Write-Host "try to publish module" -ForegroundColor Yellow
             Write-Host ("Callsign is: {0}" -f $CALLSIGN) -ForegroundColor Yellow
-            Publish-Module -Name $CALLSIGN -NuGetApiKey $env:NuGetToken -Verbose -Force
+            Publish-Module -Name $CALLSIGN -NuGetApiKey $env:NuGetToken -Verbose -Force -AllowPrerelease
         }
         Else {
             Write-Host "Skip publishing to PS Gallery because we are on $($env:APPVEYOR_REPO_BRANCH) branch." -ForegroundColor Yellow
@@ -168,9 +168,9 @@ Function Invoke-AppVeyorPSGallery() {
     }
     Catch {
         $MsgParams = @{
-            Message = 'Could not deploy module to PSGallery.'
+            Message  = 'Could not deploy module to PSGallery.'
             Category = 'Error'
-            Details = $_.Exception.Message
+            Details  = $_.Exception.Message
         }
         Add-AppveyorMessage @MsgParams
         Throw $MsgParams.Message
