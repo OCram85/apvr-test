@@ -115,7 +115,7 @@
             ReleaseNotes = 'This is just an AppVeyor test module.'
 
             # Prerelease string of this module
-            # Prerelease   = 'preview.1'
+            Prerelease   = 'alpha1'
 
             # Flag to indicate whether the module requires explicit user acceptance for install/update
             # RequireLicenseAcceptance = $false
