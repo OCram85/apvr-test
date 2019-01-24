@@ -14,14 +14,8 @@ image: Visual Studio 2017
 
 # Install pester module and init the Appveyor support.
 install:
-  - ps: Install-PackageProvider -Name NuGet -MinimumVersion '2.8.5.201' -Force -Verbose
-  - ps: Import-PackageProvider NuGet -MinimumVersion '2.8.5.201' -Force
-  - ps: Install-Module -Name 'Pester' -Scope CurrentUser -Force -SkipPublisherCheck -AllowClobber
-  - ps: Update-Module 'Pester'
-  - ps: Install-Module -Name 'posh-git' -Scope CurrentUser -Force -SkipPublisherCheck -AllowClobber
-  - ps: Update-Module 'posh-git'
-  - ps: Install-Module 'PSCoverage' -Scope CurrentUser -Force -SkipPublisherCheck -AllowClobber
   - ps: Import-Module .\tools\AppVeyor.psm1
+  - ps: Invoke-InstallDependencies
 
 environment:
   NuGetToken:
@@ -38,8 +32,14 @@ build_script:
   - ps: Invoke-AppVeyorBuild
 
 test_script:
-  - ps: Invoke-AppVeyorTests
-  - ps: Invoke-CoverageReport
+  - ps: |
+      $CodeCoverage = Invoke-AppVeyorTests
+      if ($null -ne $Env:CoverallsToken) {
+        Invoke-CoverageReport -PesterCoverageReport $CodeCoverage
+      }
+      else {
+        Write-Warning "No CoverallsToken found. This build seems to be triggered by a PR. Skipping this step..."
+      }
 
 deploy:
   - provider: GitHub

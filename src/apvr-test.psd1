@@ -9,31 +9,33 @@
 @{
 
     # Script module or binary module file associated with this manifest.
-    RootModule        = 'apvr-test.psm1'
+    RootModule           = 'apvr-test.psm1'
 
     # Version number of this module.
-    ModuleVersion     = '0.0.9999'
+    ModuleVersion        = '0.0.9999'
 
     # Supported PSEditions
-    # CompatiblePSEditions = @()
+    CompatiblePSEditions = @(
+        'Desktop'
+    )
 
     # ID used to uniquely identify this module
-    GUID              = 'fe8b4e39-51ec-46b8-88a7-29f445ec9622'
+    GUID                 = 'fe8b4e39-51ec-46b8-88a7-29f445ec9622'
 
     # Author of this module
-    Author            = 'OCram85'
+    Author               = 'OCram85'
 
     # Company or vendor of this module
-    CompanyName       = 'OCram85'
+    CompanyName          = 'OCram85'
 
     # Copyright statement for this module
-    Copyright         = '(c) 2017 OCram85. All rights reserved.'
+    Copyright            = '(c) 2017 OCram85. All rights reserved.'
 
     # Description of the functionality provided by this module
-    Description       = 'This is just an AppVeyor test module.'
+    Description          = 'This is just an AppVeyor test module.'
 
     # Minimum version of the PowerShell engine required by this module
-    PowerShellVersion = '5.0'
+    PowerShellVersion    = '5.1'
 
     # Name of the PowerShell host required by this module
     # PowerShellHostName = ''
@@ -69,19 +71,19 @@
     # NestedModules = @()
 
     # Functions to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no functions to export.
-    FunctionsToExport = @(
+    FunctionsToExport    = @(
         'Get-Test',
-        'Set-Test',
-        'Test-Exception')
+        'Set-Test'
+    )
 
     # Cmdlets to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no cmdlets to export.
-    CmdletsToExport   = @()
+    CmdletsToExport      = @()
 
     # Variables to export from this module
-    VariablesToExport = '*'
+    VariablesToExport    = '*'
 
     # Aliases to export from this module, for best performance, do not use wildcards and do not delete the entry, use an empty array if there are no aliases to export.
-    AliasesToExport   = @()
+    AliasesToExport      = @()
 
     # DSC resources to export from this module
     # DscResourcesToExport = @()
@@ -93,7 +95,7 @@
     # FileList = @()
 
     # Private data to pass to the module specified in RootModule/ModuleToProcess. This may also contain a PSData hashtable with additional module metadata used by PowerShell.
-    PrivateData       = @{
+    PrivateData          = @{
 
         PSData = @{
 
@@ -113,7 +115,7 @@
             ReleaseNotes = 'This is just an AppVeyor test module.'
 
             # Prerelease string of this module
-            Prerelease   = 'preview.1'
+            # Prerelease   = 'preview.1'
 
             # Flag to indicate whether the module requires explicit user acceptance for install/update
             # RequireLicenseAcceptance = $false
